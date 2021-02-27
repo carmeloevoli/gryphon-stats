@@ -10,6 +10,7 @@ double median(const std::vector<double>& data);
 double mean(const std::vector<double>& data);
 double mad(const std::vector<double>& data);
 double sdev(const std::vector<double>& data);
+double spline(const std::vector<double>& x, const std::vector<double>& y, double x_new);
 
 }  // namespace GSL
 
