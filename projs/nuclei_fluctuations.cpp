@@ -1,84 +1,62 @@
 // Copyright 2020 Carmelo Evoli (GSSI) - MIT License
+#include <memory>
+
 #include "Chi2.h"
 #include "Data.h"
 #include "Logging.h"
+#include "models/PrimaryProtons.h"
 
-// #include "fitters/TFitProtons.h"
-// #include "models/TProtons.h"
+void computeFluxAtEnergy(double Energy, std::string inputname, int nModels) {
+    auto protons = std::make_shared<STATS::PrimaryProtons>("gryphon_output/" + inputname, nModels);
+    auto fluxes = protons->getInterpolatedFlux(Energy);
 
-// void compute_median_flux(int n_max) {
-//     {
-//         double epsilon = 0;
-//         auto fitProtons = STATS::TFitProtons(40, 200);
-//         fitProtons.buildChi2("data/H_AMS02_rigidity.txt");
-//         fitProtons.buildProtons("ulite/protons_uniform", n_max);
-//         epsilon = fitProtons.run(0.1, 2.);
-//         fitProtons.print("output/protons_uniform.stats", epsilon);
-//     }
+    std::ostringstream oss;
+    oss << "output/" << inputname << "_" << std::setprecision(0) << std::fixed << Energy << ".txt";
+    const std::string outname = oss.str();
 
-//     {
-//         double epsilon = 0;
-//         auto fitProtons = STATS::TFitProtons(40, 200);
-//         fitProtons.buildChi2("data/H_AMS02_rigidity.txt");
-//         fitProtons.buildProtons("ulite/protons_jelly", n_max);
-//         epsilon = fitProtons.run(0.1, 2.);
-//         fitProtons.print("output/protons_jelly.stats", epsilon);
-//     }
+    std::ofstream outfile(outname);
+    if (outfile.is_open()) {
+        outfile << std::scientific << std::setprecision(10);
+        for (auto f : fluxes) outfile << f << "\n";
+    }
+    outfile.close();
+    LOGI << "saving fluxes at " << outname;
+}
 
-//     {
-//         double epsilon = 0;
-//         auto fitProtons = STATS::TFitProtons(40, 200);
-//         fitProtons.buildChi2("data/H_AMS02_rigidity.txt");
-//         fitProtons.buildProtons("ulite/protons_spirals", n_max);
-//         epsilon = fitProtons.run(0.1, 2.);
-//         fitProtons.print("output/protons_spirals.stats", epsilon);
-//     }
-// }
+void fitProtons(std::string inputname, int nModels) {
+    auto ams = std::make_shared<STATS::Data>(60, 250);
+    ams->loadDatafile("kiss_tables/H_AMS-02_Ek.txt");
+    auto protons = std::make_shared<STATS::PrimaryProtons>("gryphon_output/" + inputname, nModels);
+    STATS::Chi2 chi2(protons, ams);
+    auto eff = chi2.run(0.01, 1);
+    protons->setEfficiency(eff);
+    protons->print("output/" + inputname + ".stats");
+}
 
-// void compute_flux_at_energy(int n_max) {
-//     {
-//         const auto protons = STATS::TProtons("ulite/protons_uniform", n_max);
-//         const auto fluxes = protons.getInterpolatedFlux(1e3, 1.);
-//         std::ofstream outfile("output/protons_uniform_at1TeV.txt");
-//         if (outfile.is_open()) {
-//             outfile << std::scientific << std::setprecision(10);
-//             for (auto f : fluxes) outfile << f << "\n";
-//         }
-//         outfile.close();
-//     }
-
-//     {
-//         const auto protons = STATS::TProtons("ulite/protons_jelly", n_max);
-//         const auto fluxes = protons.getInterpolatedFlux(1e3, 1.);
-//         std::ofstream outfile("output/protons_jelly_at1TeV.txt");
-//         if (outfile.is_open()) {
-//             outfile << std::scientific << std::setprecision(10);
-//             for (auto f : fluxes) outfile << f << "\n";
-//         }
-//         outfile.close();
-//     }
-
-//     {
-//         const auto protons = STATS::TProtons("ulite/protons_spirals", n_max);
-//         const auto fluxes = protons.getInterpolatedFlux(1e3, 1.);
-//         std::ofstream outfile("output/protons_spirals_at1TeV.txt");
-//         if (outfile.is_open()) {
-//             outfile << std::scientific << std::setprecision(10);
-//             for (auto f : fluxes) outfile << f << "\n";
-//         }
-//         outfile.close();
-//     }
-// }
+void fitHelium(std::string inputname, int nModels) {
+    auto ams = std::make_shared<STATS::Data>(120, 500);
+    ams->loadDatafile("kiss_tables/He_AMS-02_Etot.txt");
+    auto helium = std::make_shared<STATS::PrimaryProtons>("gryphon_output/" + inputname, nModels);
+    STATS::Chi2 chi2(helium, ams);
+    auto eff = chi2.run(0.01, 1);
+    helium->setEfficiency(eff);
+    helium->print("output/" + inputname + ".stats");
+}
 
 int main(int argc, char* argv[]) {
     logStartupInformation();
     try {
-        STATS::Data ams;
-        ams.loadDatafile("kiss_tables/H_AMS-02_Ek.txt");
-
-        // STATS::Chi2 chi2(ams);
-        // chi2.run(0.1, 1);
-
+        int N = 1000;
+        fitProtons("protons_jelly_2.29", N);
+        fitProtons("protons_spirals_2.30", N);
+        fitHelium("helium_jelly_2.25", N);
+        fitHelium("helium_spirals_2.26", N);
+        computeFluxAtEnergy(1e2, "protons_jelly_2.29", N);
+        computeFluxAtEnergy(1e3, "protons_jelly_2.29", N);
+        computeFluxAtEnergy(1e4, "protons_jelly_2.29", N);
+        computeFluxAtEnergy(1e2, "protons_spirals_2.30", N);
+        computeFluxAtEnergy(1e3, "protons_spirals_2.30", N);
+        computeFluxAtEnergy(1e4, "protons_spirals_2.30", N);
     } catch (const std::exception& e) {
         LOGE << "exception caught with message: " << e.what();
     }

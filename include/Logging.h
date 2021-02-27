@@ -1,5 +1,5 @@
-#ifndef INCLUDE_LOGGING_H_
-#define INCLUDE_LOGGING_H_
+#ifndef STATS_INCLUDE_LOGGING_H_
+#define STATS_INCLUDE_LOGGING_H_
 
 #include <plog/Appenders/ColorConsoleAppender.h>
 #include <plog/Appenders/ConsoleAppender.h>

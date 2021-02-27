@@ -28,13 +28,11 @@ double Chi2::computeChi2(double eps) const {
     double value = 0.0;
     size_t ndata = 0;
     for (auto it = m_data->table.begin(); it != m_data->table.end(); it++) {
-        if (it->x > m_xMin && it->x < m_xMax) {
-            const auto yModel = m_model->get(it->x, {eps});
-            auto deltaChi2 = std::pow(yModel - it->y, 2);
-            deltaChi2 /= (yModel < it->y) ? std::pow(it->yErrLow, 2) : std::pow(it->yErrHigh, 2);
-            value += deltaChi2;
-            ndata++;
-        }
+        const auto yModel = m_model->get(it->x, {eps});
+        auto deltaChi2 = std::pow(yModel - it->y, 2);
+        deltaChi2 /= (yModel < it->y) ? std::pow(it->yErrLow, 2) : std::pow(it->yErrHigh, 2);
+        value += deltaChi2;
+        ndata++;
     }
     return value / (double)(ndata - 1);
 }

@@ -1,6 +1,6 @@
 // Copyright 2020 Carmelo Evoli (GSSI) - MIT License
-#ifndef LIBS_STATS_INCLUDE_TDATA_H_
-#define LIBS_STATS_INCLUDE_TDATA_H_
+#ifndef STATS_INCLUDE_DATA_H_
+#define STATS_INCLUDE_DATA_H_
 
 #include <fstream>
 #include <string>
@@ -22,7 +22,7 @@ struct dataPoint {
 
 class Data {
    public:
-    Data() {}
+    Data(double xmin, double xmax) : m_xmin(xmin), m_xmax(xmax) {}
     virtual ~Data() = default;
     void loadDatafile(const std::string& filename);
 
@@ -31,6 +31,8 @@ class Data {
 
    protected:
     std::vector<dataPoint> m_table;
+    double m_xmin;
+    double m_xmax;
 
    protected:
     void append(const std::string& filename);
@@ -38,4 +40,4 @@ class Data {
 
 }  // namespace STATS
 
-#endif  // LIBS_STATS_INCLUDE_TDATA_H_
+#endif  // STATS_INCLUDE_DATA_H_

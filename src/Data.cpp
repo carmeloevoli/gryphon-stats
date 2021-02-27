@@ -34,13 +34,13 @@ void Data::append(const std::string& filename) {
             point.y = values[1];
             point.yErrLow = values[2];
             point.yErrHigh = values[3];
-            if (fileToRead.good()) {
+            if (fileToRead.good() && point.x > m_xmin && point.x < m_xmax) {
                 m_table.push_back(point);
                 counter++;
             }
         }
     }
-    LOGI << "read " << counter << " data from " << filename;
+    LOGI << "read " << counter << " data points from " << filename;
     fileToRead.close();
 }
 

@@ -1,6 +1,6 @@
 // Copyright 2020 Carmelo Evoli (GSSI) - MIT License
-#ifndef LIBS_STATS_INCLUDE_TFITPROTONS_H_
-#define LIBS_STATS_INCLUDE_TFITPROTONS_H_
+#ifndef STATS_INCLUDE_CHI2_H_
+#define STATS_INCLUDE_CHI2_H_
 
 #include <memory>
 #include <string>
@@ -23,9 +23,6 @@ class Chi2 {
    protected:
     std::shared_ptr<Model> m_model;
     std::shared_ptr<Data> m_data;
-    double m_xMin = 0;  // TODO init this
-    double m_xMax = 1;
-    // std::pair<double, double> m_E_range;
 
    protected:
     double computeChi2(double eps) const;
@@ -33,4 +30,4 @@ class Chi2 {
 
 }  // namespace STATS
 
-#endif  // LIBS_STATS_INCLUDE_TFITPROTONS_H_
+#endif  // STATS_INCLUDE_CHI2_H_

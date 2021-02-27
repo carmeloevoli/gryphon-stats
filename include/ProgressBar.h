@@ -1,6 +1,6 @@
 // Copyright CRPROPA - https://crpropa.desy.de/
-#ifndef INCLUDE_PROGRESSBAR_H_
-#define INCLUDE_PROGRESSBAR_H_
+#ifndef STATS_INCLUDE_PROGRESSBAR_H_
+#define STATS_INCLUDE_PROGRESSBAR_H_
 
 #include <ctime>
 #include <memory>
@@ -33,4 +33,4 @@ class ProgressBar {
 
 }  // namespace STATS
 
-#endif // INCLUDE_PROGRESSBAR_H_ 
+#endif  // STATS_INCLUDE_PROGRESSBAR_H_
