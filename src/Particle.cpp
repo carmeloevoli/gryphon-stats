@@ -10,7 +10,8 @@
 
 namespace STATS {
 
-Particle::Particle(const std::string& initFilename, int sampleSize) {
+Particle::Particle(const std::string& initFilename, int sampleSize, bool doFlux)
+    : m_doFlux(doFlux) {
     LOGI << "reading sample from " << initFilename;
     LOGI << "expected sample size is " << sampleSize;
     existsFile0(initFilename);
@@ -55,7 +56,10 @@ std::vector<double> Particle::loadFluxVector(const std::string& filename, int nR
         fileToRead >> E_i >> flux_i >> flux_max_i;
         if (E_i != m_E.at(j))
             throw std::runtime_error("the energy vector is not the same for all files.");
-        flux.push_back(flux_i);
+        if (m_doFlux)
+            flux.push_back(flux_i);
+        else
+            flux.push_back(flux_max_i);
     }
     assert(flux.size() == m_E.size());
     return flux;

@@ -63,20 +63,6 @@ std::vector<double> PrimaryProtons::getInterpolatedFlux(const double& E) const {
     for (const auto realization : m_protonsSample) {
         const auto flux = realization.second;
         const auto value = UTILS::LinearInterpolatorLog(m_E, flux, E);
-        // for (size_t i = 0; i < size; ++i) {
-        //     const auto flux = m_protonsSample[i].second;
-        //     const auto E_size = protons->get_E_size();
-        //     double logx[E_size], logy[E_size];
-        //     for (int i = 0; i < E_size; ++i) {
-        //         logx[i] = std::log(protons->get_E(i));
-        //         logy[i] = std::log(flux.at(i));
-        //     }
-        //     gsl_interp_accel* acc = gsl_interp_accel_alloc();
-        //     gsl_spline* spline = gsl_spline_alloc(gsl_interp_cspline, E_size);
-        //     gsl_spline_init(spline, logx, logy, E_size);
-        //     auto value = gsl_spline_eval(spline, std::log(E), acc);
-        //     gsl_spline_free(spline);
-        //     gsl_interp_accel_free(acc);
         output.push_back(m_efficiency * value);
     }
     return output;
