@@ -33,13 +33,13 @@ void PrimaryProtons::init() {
     }
 }
 
-double PrimaryProtons::get(double x, std::vector<double> params) const {
+double PrimaryProtons::get(double x, std::vector<double> params) {
     const double E = x;
     const double efficiency = params[0];
     return efficiency * UTILS::LinearInterpolatorLog(m_E, m_median, E);
 }
 
-void PrimaryProtons::print(std::string filename) const {
+void PrimaryProtons::print(std::string filename) {
     std::ofstream outfile(filename.c_str());
     if (outfile.is_open()) {
         outfile << std::scientific << std::setprecision(4);

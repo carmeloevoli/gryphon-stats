@@ -20,7 +20,7 @@ double Chi2::run(double x_min, double x_max) const {
             best_efficiency = eps;
         }
     }
-    LOGI << "> 🚩 found min chi2 at: " << min_chi2 << " with efficiency: " << best_efficiency;
+    LOGI << "> 🚩 found min chi2: " << min_chi2 << " with efficiency: " << best_efficiency;
     return best_efficiency;
 }
 

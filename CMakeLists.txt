@@ -35,6 +35,7 @@ endif(GSL_FOUND)
 # add source files
 set( GRYPHON_SRCS
 	src/models/PrimaryProtons.cpp
+	src/models/PrimaryElectrons.cpp
 	src/Chi2.cpp
 	src/Data.cpp
 	src/gsl.cpp

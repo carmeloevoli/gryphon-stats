@@ -10,7 +10,7 @@
 namespace STATS {
 
 class PrimaryProtons : public Model {
-   private:
+   protected:
     std::vector<double> m_E;
     Sample m_protonsSample;
     std::vector<double> m_median;
@@ -18,7 +18,7 @@ class PrimaryProtons : public Model {
     std::vector<double> m_mean;
     std::vector<double> m_sdev;
 
-   private:
+   protected:
     void init();
     std::vector<double> computeMeasures(const std::vector<double>& v);
 
@@ -26,8 +26,8 @@ class PrimaryProtons : public Model {
     PrimaryProtons(const std::string initFilename, const int& nSample);
     virtual ~PrimaryProtons() = default;
 
-    double get(double x, std::vector<double> params) const;
-    void print(std::string filename) const;
+    double get(double x, std::vector<double> params);
+    void print(std::string filename);
     std::vector<double> getInterpolatedFlux(const double& E) const;
 };
 
