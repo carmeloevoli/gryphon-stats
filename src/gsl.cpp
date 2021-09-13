@@ -1,4 +1,5 @@
 #include <gsl/gsl_errno.h>
+#include <gsl/gsl_sort.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_statistics.h>
 #include <gsl/gsl_vector.h>
@@ -32,6 +33,14 @@ double sdev(const std::vector<double>& data) {
     const int size = data.size();
     auto gsl_v = gsl_vector_const_view_array(&data[0], size);
     return gsl_stats_sd(gsl_v.vector.data, 1, size);
+}
+
+double percentile(const std::vector<double>& data, double percentile) {
+    auto size = data.size();
+    std::vector<double> sorted_vector;
+    copy(data.begin(), data.end(), back_inserter(sorted_vector));
+    gsl_sort(&sorted_vector[0], 1, size);
+    return gsl_stats_quantile_from_sorted_data(&sorted_vector[0], 1, size, percentile);
 }
 
 double spline(const std::vector<double>& x, const std::vector<double>& y, double x_new) {
