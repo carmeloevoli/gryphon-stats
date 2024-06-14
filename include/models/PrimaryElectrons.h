@@ -22,11 +22,15 @@ class PrimaryElectrons : public Model {
     std::vector<double> m_mad;
     std::vector<double> m_mean;
     std::vector<double> m_sdev;
+    std::vector<double> m_p95_low;
+    std::vector<double> m_p95_high;
 
     std::vector<double> m_median_all;
     std::vector<double> m_mad_all;
     std::vector<double> m_mean_all;
     std::vector<double> m_sdev_all;
+    std::vector<double> m_p95_low_all;
+    std::vector<double> m_p95_high_all;
 
    protected:
     void init(double efficiency_snr);

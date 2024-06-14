@@ -36,6 +36,9 @@ endif(GSL_FOUND)
 set( GRYPHON_SRCS
 	src/models/PrimaryProtons.cpp
 	src/models/PrimaryElectrons.cpp
+	src/models/SingleGalaxy.cpp
+	src/models/Secondary.cpp
+	src/models/Positrons.cpp
 	src/Chi2.cpp
 	src/Data.cpp
 	src/gsl.cpp
@@ -54,6 +57,9 @@ target_link_libraries (gryphon GRYPHON_LIB ${GRYPHON_LIBRARIES})
 
 add_executable(nuclei projs/nuclei_fluctuations.cpp)
 target_link_libraries (nuclei GRYPHON_LIB ${GRYPHON_LIBRARIES})
+
+add_executable(dampe projs/fit_dampe.cpp)
+target_link_libraries (dampe GRYPHON_LIB ${GRYPHON_LIBRARIES})
 
 # show summary
 message (STATUS "CMAKE_SYSTEM .......... = ${CMAKE_SYSTEM}")

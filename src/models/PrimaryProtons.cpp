@@ -19,6 +19,8 @@ PrimaryProtons::PrimaryProtons(const std::string initFilename, const int& nSampl
     m_mad.resize(m_E.size());
     m_mean.resize(m_E.size());
     m_sdev.resize(m_E.size());
+    m_p95_low.resize(m_E.size());
+    m_p95_high.resize(m_E.size());
     init();
 }
 
@@ -30,6 +32,8 @@ void PrimaryProtons::init() {
         m_mad.at(i) = GSL::mad(v);
         m_mean.at(i) = GSL::mean(v);
         m_sdev.at(i) = GSL::sdev(v);
+        m_p95_low.at(i) = GSL::percentile(v, 2.5 / 100.);
+        m_p95_high.at(i) = GSL::percentile(v, 97.5 / 100.);
     }
 }
 
@@ -43,13 +47,15 @@ void PrimaryProtons::print(std::string filename) {
     std::ofstream outfile(filename.c_str());
     if (outfile.is_open()) {
         outfile << std::scientific << std::setprecision(4);
-        outfile << "# E - median - mad - mean - sdev\n";
+        outfile << "# E - median - mad - mean - sdev - %2.5 - %97.5\n";
         for (size_t i = 0; i < m_E.size(); ++i) {
             outfile << m_E.at(i) << "\t";
             outfile << m_efficiency * m_median.at(i) << "\t";
             outfile << m_efficiency * m_mad.at(i) << "\t";
             outfile << m_efficiency * m_mean.at(i) << "\t";
             outfile << m_efficiency * m_sdev.at(i) << "\t";
+            outfile << m_efficiency * m_p95_low.at(i) << "\t";
+            outfile << m_efficiency * m_p95_high.at(i) << "\t";
             outfile << "\n";
         }
         outfile.close();

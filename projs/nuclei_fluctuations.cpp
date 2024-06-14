@@ -110,44 +110,57 @@ void fitElectrons(std::string inputname_pwn, std::string inputname_snr, int nMod
 int main(int argc, char* argv[]) {
     logStartupInformation();
     try {
+        // {
+        //     const int N = 20000;
+
+        //     fitProtons("protons_jelly_2.29", N);
+        //     fitProtons("protons_spirals_2.30", N);
+
+        //     fitHelium("helium_jelly_2.25", N);
+        //     fitHelium("helium_spirals_2.26", N);
+
+        //     fitElectrons("pairs_spirals_1.80_2.80", "electrons_spirals_2.58", N);
+        //     fitElectrons("pairs_spirals_1.80_2.80", "electrons_jelly_2.62", N);
+        //     fitPositrons("pairs_jelly_1.90_3.00", N);
+        // }
+
         {
-            const int N = 11000;
+            const size_t N = 100000;
+            // computeFluxAtEnergy(1e2, "protons_jelly/protons_jelly_2.29", N);
+            // computeFluxAtEnergy(1e3, "protons_jelly/protons_jelly_2.29", N);
+            // computeFluxAtEnergy(1e4, "protons_jelly/protons_jelly_2.29", N);
+            // computeFluxAtEnergy(1e2, "protons_spirals/protons_spirals_2.30", N);
+            // computeFluxAtEnergy(1e3, "protons_spirals/protons_spirals_2.30", N);
+            // computeFluxAtEnergy(1e4, "protons_spirals/protons_spirals_2.30", N);
 
-            fitProtons("protons_jelly_2.29", N);
-            fitProtons("protons_spirals_2.30", N);
-            fitHelium("helium_jelly_2.25", N);
-            fitHelium("helium_spirals_2.26", N);
+            // computeSingleSourceF(1e2, "protons_jelly/protons_jelly_2.29", N);
+            // computeSingleSourceF(1e3, "protons_jelly/protons_jelly_2.29", N);
+            // computeSingleSourceF(1e4, "protons_jelly/protons_jelly_2.29", N);
+            // computeSingleSourceF(1e2, "protons_spirals/protons_spirals_2.30", N);
+            // computeSingleSourceF(1e3, "protons_spirals/protons_spirals_2.30", N);
+            // computeSingleSourceF(1e4, "protons_spirals/protons_spirals_2.30", N);
+        }
 
-            computeFluxAtEnergy(1e2, "protons_jelly_2.29", N);
-            computeFluxAtEnergy(1e3, "protons_jelly_2.29", N);
-            computeFluxAtEnergy(1e4, "protons_jelly_2.29", N);
-            computeFluxAtEnergy(1e2, "protons_spirals_2.30", N);
-            computeFluxAtEnergy(1e3, "protons_spirals_2.30", N);
-            computeFluxAtEnergy(1e4, "protons_spirals_2.30", N);
-            computeSingleSourceF(1e2, "protons_jelly_2.29", N);
-            computeSingleSourceF(1e3, "protons_jelly_2.29", N);
-            computeSingleSourceF(1e4, "protons_jelly_2.29", N);
-            computeSingleSourceF(1e2, "protons_spirals_2.30", N);
-            computeSingleSourceF(1e3, "protons_spirals_2.30", N);
-            computeSingleSourceF(1e4, "protons_spirals_2.30", N);
+        // fitElectrons("pairs_spirals_1.80_2.80", "electrons_spirals_2.58", N);
+        // fitElectrons("pairs_spirals_1.80_2.80", "electrons_jelly_2.62", N);
+        // fitPositrons("pairs_jelly_1.90_3.00", N);
 
-            fitElectrons("pairs_spirals_1.80_2.80", "electrons_spirals_2.58", N);
-            fitElectrons("pairs_spirals_1.80_2.80", "electrons_jelly_2.62", N);
-            fitPositrons("pairs_jelly_1.90_3.00", N);
+        {
+            const size_t N = 100000;
 
-            computeFluxAtEnergy(1e2, "electrons_jelly_2.62", N);
-            computeFluxAtEnergy(1e3, "electrons_jelly_2.62", N);
-            computeFluxAtEnergy(1e4, "electrons_jelly_2.62", N);
-            computeFluxAtEnergy(1e2, "electrons_spirals_2.58", N);
-            computeFluxAtEnergy(1e3, "electrons_spirals_2.58", N);
-            computeFluxAtEnergy(1e4, "electrons_spirals_2.58", N);
+            computeFluxAtEnergy(1e2, "electrons_jelly/electrons_jelly_2.62", N);
+            computeFluxAtEnergy(1e3, "electrons_jelly/electrons_jelly_2.62", N);
+            computeFluxAtEnergy(1e4, "electrons_jelly/electrons_jelly_2.62", N);
+            computeFluxAtEnergy(1e2, "electrons_spirals/electrons_spirals_2.58", N);
+            computeFluxAtEnergy(1e3, "electrons_spirals/electrons_spirals_2.58", N);
+            computeFluxAtEnergy(1e4, "electrons_spirals/electrons_spirals_2.58", N);
 
-            computeSingleSourceF(1e2, "electrons_jelly_2.62", N);
-            computeSingleSourceF(1e3, "electrons_jelly_2.62", N);
-            computeSingleSourceF(1e4, "electrons_jelly_2.62", N);
-            computeSingleSourceF(1e2, "electrons_spirals_2.58", N);
-            computeSingleSourceF(1e3, "electrons_spirals_2.58", N);
-            computeSingleSourceF(1e4, "electrons_spirals_2.58", N);
+            computeSingleSourceF(1e2, "electrons_jelly/electrons_jelly_2.62", N);
+            computeSingleSourceF(1e3, "electrons_jelly/electrons_jelly_2.62", N);
+            computeSingleSourceF(1e4, "electrons_jelly/electrons_jelly_2.62", N);
+            computeSingleSourceF(1e2, "electrons_spirals/electrons_spirals_2.58", N);
+            computeSingleSourceF(1e3, "electrons_spirals/electrons_spirals_2.58", N);
+            computeSingleSourceF(1e4, "electrons_spirals/electrons_spirals_2.58", N);
         }
     } catch (const std::exception& e) {
         LOGE << "exception caught with message: " << e.what();

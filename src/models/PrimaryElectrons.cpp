@@ -27,10 +27,14 @@ PrimaryElectrons::PrimaryElectrons(const std::string initFilename_snr,
     m_mad.resize(size);
     m_mean.resize(size);
     m_sdev.resize(size);
+    m_p95_low.resize(size);
+    m_p95_high.resize(size);
     m_median_all.resize(size);
     m_mad_all.resize(size);
     m_mean_all.resize(size);
     m_sdev_all.resize(size);
+    m_p95_low_all.resize(size);
+    m_p95_high_all.resize(size);
 }
 
 double PrimaryElectrons::getMedian(double efficiency_snr, size_t i) {
@@ -56,6 +60,8 @@ void PrimaryElectrons::init(double efficiency_snr) {
         m_mad.at(i) = GSL::mad(v);
         m_mean.at(i) = GSL::mean(v);
         m_sdev.at(i) = GSL::sdev(v);
+        m_p95_low.at(i) = GSL::percentile(v, 2.5 / 100.);
+        m_p95_high.at(i) = GSL::percentile(v, 97.5 / 100.);
     }
 
     for (int i = 0; i < m_E_snr.size(); ++i) {
@@ -69,6 +75,8 @@ void PrimaryElectrons::init(double efficiency_snr) {
         m_mad_all.at(i) = GSL::mad(v);
         m_mean_all.at(i) = GSL::mean(v);
         m_sdev_all.at(i) = GSL::sdev(v);
+        m_p95_low_all.at(i) = GSL::percentile(v, 2.5 / 100.);
+        m_p95_high_all.at(i) = GSL::percentile(v, 97.5 / 100.);
     }
 }
 
@@ -103,10 +111,14 @@ void PrimaryElectrons::print(std::string filename) {
             outfile << m_mad.at(i) << "\t";
             outfile << m_mean.at(i) << "\t";
             outfile << m_sdev.at(i) << "\t";
+            outfile << m_p95_low.at(i) << "\t";
+            outfile << m_p95_high.at(i) << "\t";
             outfile << m_median_all.at(i) << "\t";
             outfile << m_mad_all.at(i) << "\t";
             outfile << m_mean_all.at(i) << "\t";
             outfile << m_sdev_all.at(i) << "\t";
+            outfile << m_p95_low_all.at(i) << "\t";
+            outfile << m_p95_high_all.at(i) << "\t";
             outfile << "\n";
         }
         outfile.close();

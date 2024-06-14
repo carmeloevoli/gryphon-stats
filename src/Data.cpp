@@ -25,7 +25,7 @@ void Data::append(const std::string& filename) {
     std::ifstream fileToRead(filename.c_str());
     int counter = 0;
     if (fileToRead.is_open()) {
-        for (int i = 0; i < 7; ++i) fileToRead.ignore(maxNCharInLine, '\n');
+        for (int i = 0; i < 8; ++i) fileToRead.ignore(maxNCharInLine, '\n');
         double values[6];
         while (!fileToRead.eof()) {
             for (int j = 0; j < 6; ++j) fileToRead >> values[j];  // TODO check this

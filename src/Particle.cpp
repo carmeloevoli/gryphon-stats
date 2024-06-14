@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <fstream>
+#include <iostream>
 
 #include "Utilities.h"
 
@@ -54,8 +55,10 @@ std::vector<double> Particle::loadFluxVector(const std::string& filename, int nR
     double E_i, flux_i, flux_max_i;
     for (size_t j = 0; j < nRows; ++j) {
         fileToRead >> E_i >> flux_i >> flux_max_i;
-        if (E_i != m_E.at(j))
+        if (E_i != m_E.at(j)) {
+            std::cout << filename << "\n";
             throw std::runtime_error("the energy vector is not the same for all files.");
+        }
         if (m_doFlux)
             flux.push_back(flux_i);
         else
